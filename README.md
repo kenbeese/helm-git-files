@@ -3,7 +3,7 @@ helm-git-files
 
 Yet another helm to list git files.
 
-This is a helm implementation of [anything-git-files-el](http://github.com/tarao/anything-git-files-el).
+It is a fork of [anything-git-files-el](http://github.com/tarao/anything-git-files-el).
 
 Features
 ==============
