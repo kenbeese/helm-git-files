@@ -226,11 +226,10 @@ is tracked for each KEY separately."
       (delayed)
       (volatile)
       (match identity)
-      (keymap . ,helm-generic-files-map)
-      (help-message . helm-generic-file-help-message)
-      (mode-line . helm-generic-file-mode-line-string)
-      (action . ,(cdr (helm-get-actions-from-type
-                     helm-source-file-cache)))
+      (type . file)
+      ;; Remove helm-highlight-files because show relative path from git root dir.
+      (candidate-transformer helm-skip-boring-files
+                             helm-w32-pathname-transformer)
       (display-to-real . helm-git-files:display-to-real))))
 
 (defun helm-git-files:submodules-by-dot (&optional dotgitmodule)
