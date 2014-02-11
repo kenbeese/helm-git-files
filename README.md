@@ -28,7 +28,7 @@ Please type "M-x helm-git-files" in a git repository.
 
 Customization
 ==============
-My setting is as follows.
+My setting is as follows:
 
 ```lisp
 (require 'helm-git-files)
