@@ -5,6 +5,7 @@
 ;; Author: INA Lintaro <tarao.gnn at gmail.com>
 ;;         TAKAGI Kentaro <kentaro0910_at_gmail.com>
 ;; Version: 0.1
+;; Package-Requires: ((helm "1.5.9"))
 ;; Keywords: helm, git
 
 ;; This file is NOT part of GNU Emacs.
