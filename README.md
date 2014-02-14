@@ -39,9 +39,10 @@ My setting is as follows:
   (let ((root (helm-git-files:root))
         glist)
     (setq knbs-git-recentf-list '())
-    (dolist (f rlist)
-    (if (eq (string-match root f) 0)
-        (add-to-list 'knbs-git-recentf-list f t)))))
+    (when root                          ; check in git repository
+      (dolist (f rlist)
+        (if (eq (string-match root f) 0)
+            (add-to-list 'knbs-git-recentf-list f t))))))
 
 (setq knbs-helm-source-git-recentf
   `((name . "Git Recentf")
