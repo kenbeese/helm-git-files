@@ -75,9 +75,12 @@
       (apply 'vc-git-command (current-buffer) 0 nil args))))
 
 (defun helm-git-files:root-1 ()
-  (file-name-as-directory
-   (helm-git-files:chomp
-    (helm-git-files:command-to-string "rev-parse" "--show-toplevel"))))
+  (let ((result (ignore-errors
+                  (helm-git-files:command-to-string
+                   "rev-parse" "--show-toplevel"))))
+    (when result
+      (file-name-as-directory
+       (helm-git-files:chomp result)))))
 
 (defun helm-git-files:root ()
   (or (vc-file-getprop default-directory 'git-root)
@@ -267,31 +270,32 @@ is tracked for each KEY separately."
 ;;;###autoload
 (defvar helm-git-files:modified-source nil)
 (setq helm-git-files:modified-source
-      (helm-git-files:source 'modified))
+  (ignore-errors (helm-git-files:source 'modified)))
 
 ;;;###autoload
 (defvar helm-git-files:untracked-source nil)
 (setq helm-git-files:untracked-source
-      (helm-git-files:source 'untracked))
+  (ignore-errors (helm-git-files:source 'untracked)))
 
 ;;;###autoload
 (defvar helm-git-files:all-source nil)
 (setq helm-git-files:all-source
-      (helm-git-files:source 'all))
+  (ignore-errors (helm-git-files:source 'all)))
 
 ;;;###autoload
 (defun helm-git-files:submodule-sources (kinds &optional root)
-  (let* ((root (or root (helm-git-files:root)))
-         (modules (helm-git-files:submodules root))
-         (kinds (if (listp kinds) kinds (list kinds)))
-         (once helm-git-files:update-submodules-once))
-    (loop for module in modules
-          append (loop for what in kinds
-                       for path = (file-name-as-directory
-                                   (expand-file-name module root))
-                       if (file-exists-p path)
-                       collect (helm-git-files:source
-                                what path module once)))))
+  (ignore-errors
+    (let* ((root (or root (helm-git-files:root)))
+           (modules (helm-git-files:submodules root))
+           (kinds (if (listp kinds) kinds (list kinds)))
+           (once helm-git-files:update-submodules-once))
+      (loop for module in modules
+            append (loop for what in kinds
+                         for path = (file-name-as-directory
+                                     (expand-file-name module root))
+                         if (file-exists-p path)
+                         collect (helm-git-files:source
+                                  what path module once))))))
 
 ;;;###autoload
 (defun helm-git-files ()
