@@ -226,10 +226,8 @@ is tracked for each KEY separately."
     `((name . ,name)
       (init . helm-git-files:init)
       (cleanup . helm-git-files:cleanup)
-      (candidates . ,(helm-git-files:candidates-fun what root update-once))
+      (candidates-in-buffer . ,(helm-git-files:candidates-fun what root update-once))
       (delayed)
-      (volatile)
-      (match identity)
       (type . file)
       ;; Remove helm-highlight-files because show relative path from git root dir.
       (candidate-transformer helm-skip-boring-files
